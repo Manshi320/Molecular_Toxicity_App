@@ -47,16 +47,16 @@ st.write("Step 1")
 
 @st.cache_resource
 def load_model():
-    st.write("Loading model...")
+    #st.write("Loading model...")
     return joblib.load("RandomForest_model.pkl")
 
 model = load_model()
 
-st.write("Model loaded")
+#st.write("Model loaded")
 
-st.write("Loading CSV...")
+#st.write("Loading CSV...")
 feature_template = pd.read_csv("master_features.csv")
-st.write("CSV loaded")
+#st.write("CSV loaded")
 feature_columns = feature_template.columns.tolist()
 
 if "Label" in feature_columns:
