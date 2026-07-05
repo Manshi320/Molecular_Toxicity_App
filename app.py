@@ -118,62 +118,47 @@ if st.button("Predict"):
         st.stop()
 
 
-mol = Chem.MolFromSmiles(smiles)
+    mol = Chem.MolFromSmiles(smiles)
 
-if mol:
-    #st.subheader("Molecule Structure")
-    #img = Draw.MolToImage(mol, size=(300, 300))
-    #st.image(img)
+    if mol:
+        st.subheader("Molecular Properties")
+        st.write("Molecular Weight:", Descriptors.MolWt(mol))
+        st.write("LogP:", Descriptors.MolLogP(mol))
+        st.write("H-Bond Donors:", Descriptors.NumHDonors(mol))
+        st.write("H-Bond Acceptors:", Descriptors.NumHAcceptors(mol))
+        st.write("TPSA:", Descriptors.TPSA(mol))
+        st.write("Rotatable Bonds:", Descriptors.NumRotatableBonds(mol))
 
-    st.subheader("Molecular Properties")
-    st.write("Molecular Weight:", Descriptors.MolWt(mol))
-    st.write("LogP:", Descriptors.MolLogP(mol))
-    st.write("H-Bond Donors:", Descriptors.NumHDonors(mol))
-    st.write("H-Bond Acceptors:", Descriptors.NumHAcceptors(mol))
-    st.write("TPSA:", Descriptors.TPSA(mol))
-    st.write("Rotatable Bonds:", Descriptors.NumRotatableBonds(mol))
-        # Make prediction
-# Make prediction
-    prediction = model.predict(x)[0]
-    probability = model.predict_proba(x)[0]
+        prediction = model.predict(x)[0]
+        probability = model.predict_proba(x)[0]
 
-    st.subheader("Prediction")
+        st.subheader("Prediction")
 
-    if prediction == 1:
-        st.error("☣ Toxic")
-        confidence = probability[1]
-    else:
-        st.success("✅ Non-Toxic")
-        confidence = probability[0]
+        if prediction == 1:
+            st.error("☣ Toxic")
+            confidence = probability[1]
+        else:
+            st.success("✅ Non-Toxic")
+            confidence = probability[0]
 
-    st.subheader("Prediction Confidence")
-    st.progress(float(confidence))
-    st.write(f"Confidence: {confidence*100:.2f}%")
+        st.subheader("Prediction Confidence")
+        st.progress(float(confidence))
+        st.write(f"Confidence: {confidence*100:.2f}%")
 
-    st.subheader("Class Probabilities")
+        st.subheader("Class Probabilities")
 
-    prob_df = pd.DataFrame({
-        "Class": ["Non-Toxic", "Toxic"],
-        "Probability": [
-            probability[0] * 100,
-            probability[1] * 100
-        ]
-    })
+        prob_df = pd.DataFrame({
+            "Class": ["Non-Toxic", "Toxic"],
+            "Probability": [
+                probability[0] * 100,
+                probability[1] * 100
+            ]
+        })
 
-    st.dataframe(prob_df)
+        st.dataframe(prob_df, hide_index=True)
 
-prob_df = pd.DataFrame({
-    "Class": ["Non-Toxic", "Toxic"],
-    "Probability": [
-        probability[0]*100,
-        probability[1]*100
-    ]
-})
-
-st.dataframe(prob_df, hide_index=True)
-
-
-st.write("🕒 Prediction Time:", datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
+        st.write("🕒 Prediction Time:",
+                 datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
 
 st.markdown("---")
 st.caption("Developed by MANSHI")
