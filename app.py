@@ -5,7 +5,7 @@ import joblib
 from datetime import datetime
 
 from rdkit import Chem
-from rdkit.Chem import AllChem, Descriptors, Draw
+from rdkit.Chem import AllChem, Descriptors
 from rdkit import DataStructs
 
 # -------------------------------
@@ -119,9 +119,9 @@ if st.button("Predict"):
 mol = Chem.MolFromSmiles(smiles)
 
 if mol:
-    st.subheader("Molecule Structure")
-    img = Draw.MolToImage(mol, size=(300, 300))
-    st.image(img)
+    #st.subheader("Molecule Structure")
+    #img = Draw.MolToImage(mol, size=(300, 300))
+    #st.image(img)
 
     st.subheader("Molecular Properties")
     st.write("Molecular Weight:", Descriptors.MolWt(mol))
