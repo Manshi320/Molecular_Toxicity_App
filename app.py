@@ -111,9 +111,9 @@ if st.button("Predict"):
         st.warning("Please enter a SMILES string.")
         st.stop()
 
-    X = smiles_to_features(smiles)
+    x= smiles_to_features(smiles)
 
-    if X is None:
+    if x is None:
         st.error("Invalid SMILES string.")
         st.stop()
 
@@ -133,8 +133,8 @@ if mol:
     st.write("TPSA:", Descriptors.TPSA(mol))
     st.write("Rotatable Bonds:", Descriptors.NumRotatableBonds(mol))
         # Make prediction
-prediction = model.predict(X)[0]
-probability = model.predict_proba(X)[0]
+prediction = model.predict(x)[0]
+probability = model.predict_proba(x)[0]
 
 st.subheader("Prediction")
 
