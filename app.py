@@ -133,23 +133,34 @@ if mol:
     st.write("TPSA:", Descriptors.TPSA(mol))
     st.write("Rotatable Bonds:", Descriptors.NumRotatableBonds(mol))
         # Make prediction
-prediction = model.predict(x)[0]
-probability = model.predict_proba(x)[0]
+# Make prediction
+    prediction = model.predict(x)[0]
+    probability = model.predict_proba(x)[0]
 
-st.subheader("Prediction")
+    st.subheader("Prediction")
 
+    if prediction == 1:
+        st.error("☣ Toxic")
+        confidence = probability[1]
+    else:
+        st.success("✅ Non-Toxic")
+        confidence = probability[0]
 
-if prediction == 1:
-    st.error("☠️ Toxic")
-    confidence = probability[1]
-else:
-    st.success("✅ Non-Toxic")
-    confidence = probability[0]
+    st.subheader("Prediction Confidence")
+    st.progress(float(confidence))
+    st.write(f"Confidence: {confidence*100:.2f}%")
 
-st.subheader("Prediction Confidence")
-st.progress(float(confidence))
-st.write(f"Confidence: {confidence*100:.2f}%")
-st.subheader("Class Probabilities")
+    st.subheader("Class Probabilities")
+
+    prob_df = pd.DataFrame({
+        "Class": ["Non-Toxic", "Toxic"],
+        "Probability": [
+            probability[0] * 100,
+            probability[1] * 100
+        ]
+    })
+
+    st.dataframe(prob_df)
 
 prob_df = pd.DataFrame({
     "Class": ["Non-Toxic", "Toxic"],
