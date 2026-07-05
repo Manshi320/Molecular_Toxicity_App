@@ -16,7 +16,7 @@ This project predicts whether a molecule is Toxic or Non-Toxic using a Random Fo
 - Pandas
 
 ## Live Demo
-https://moleculartoxicityapp-bq3ssmrjrcm2kvs9woxlvu.streamlit.app
+[https://moleculartoxicityapp-bq3ssmrjrcm2kvs9woxlvu.streamlit.app](https://moleculartoxicityapp-bq3ssrnjrcm2kvs9woxlvu.streamlit.app/)
 
 ## GitHub Repository
 https://github.com/Manshi320/Molecular_Toxicity_App
